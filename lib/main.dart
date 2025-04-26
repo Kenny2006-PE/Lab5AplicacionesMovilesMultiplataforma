@@ -22,15 +22,15 @@ class CalculatorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1D267D), // Azul oscuro Barça
+      backgroundColor: const Color(0xFF1D267D), // Fondo azul oscuro
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
               flex: 2,
               child: Container(
-                alignment: Alignment.bottomRight,
                 padding: const EdgeInsets.all(20),
+                alignment: Alignment.bottomRight,
                 child: const Text(
                   '0',
                   style: TextStyle(
@@ -49,7 +49,7 @@ class CalculatorPage extends StatelessWidget {
                   buildButtonRow(['7', '8', '9', '×']),
                   buildButtonRow(['4', '5', '6', '-']),
                   buildButtonRow(['1', '2', '3', '+']),
-                  buildButtonRow(['0', '.', '='], isLast: true),
+                  buildButtonRow(['0', '.', '='], isLastRow: true),
                 ],
               ),
             ),
@@ -59,7 +59,7 @@ class CalculatorPage extends StatelessWidget {
     );
   }
 
-  Widget buildButtonRow(List<String> texts, {bool isLast = false}) {
+  Widget buildButtonRow(List<String> texts, {bool isLastRow = false}) {
     return Expanded(
       child: Row(
         children: texts.map((text) {
@@ -68,40 +68,29 @@ class CalculatorPage extends StatelessWidget {
 
           Color buttonColor;
           if (isOperator) {
-            buttonColor = const Color(0xFFA50044); // Grana (vino)
+            buttonColor = const Color(0xFFA50044); // Grana (rojo vino)
           } else if (isFunction) {
-            buttonColor = const Color(0xFFFFD700); // Amarillo Barça
+            buttonColor = const Color(0xFFFFD700); // Amarillo
           } else {
-            buttonColor = const Color(0xFF3B4CCA); // Azul clarito Barça
+            buttonColor = const Color(0xFF3B4CCA); // Azul clarito
           }
 
           return Expanded(
-            flex: (isLast && text == '0') ? 2 : 1,
+            flex: (isLastRow && text == '0') ? 2 : 1, // El botón '0' ocupa el doble de espacio
             child: Padding(
               padding: const EdgeInsets.all(6),
-              child: GestureDetector(
-                onTap: () {},
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: buttonColor,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.9),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: const Offset(2, 4),
-                      ),
-                    ],
-                  ),
-                  child: Center(
-                    child: Text(
-                      text,
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        color: isFunction ? Colors.black : Colors.white,
-                      ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: buttonColor,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Center(
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: isFunction ? Colors.black : Colors.white,
                     ),
                   ),
                 ),
